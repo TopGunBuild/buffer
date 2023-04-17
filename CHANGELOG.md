@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.0...v1.0.1) (2023-04-17)
+
+
+### Bug Fixes
+
+* update config in package.json ([4519e22](https://github.com/TopGunBuild/topgun-buffer/commit/4519e22cf98d78c939429488fbbfffe179c0f967))
+
 # 1.0.0 (2023-04-17)
 
 
