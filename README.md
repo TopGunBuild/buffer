@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none;">📦 topgun-buffer</h1>
-<h3 align="center">An isomorphic WebCrypto for Javascript in Node and the browser, used in <a href="https://github.com/TopGunBuild/topgun">TopGun</a></h3>
+<h3 align="center">An isomorphic Buffer API for <a href="https://github.com/TopGunBuild/topgun">TopGun</a></h3>
 
 <p align="center">
   <a href="https://github.com/semantic-release/semantic-release">
