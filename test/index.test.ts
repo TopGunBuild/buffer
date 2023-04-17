@@ -56,4 +56,12 @@ describe('Buffer', () => {
         expect(u[2]).toEqual(0);
         expect(u[3]).toEqual(0);
     });
+
+    it('detect utf16 surrogate pairs', async () =>
+    {
+        const text = '\uD83D\uDE38' + '\uD83D\uDCAD' + '\uD83D\uDC4D';
+        const buf = new Buffer(text);
+
+        expect(text).toEqual(buf.toString());
+    });
 });
