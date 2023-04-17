@@ -17,7 +17,7 @@ declare const SharedArrayBuffer: any;
 
 /* eslint-disable prefer-rest-params */
 
-export class TGBuffer extends Uint8Array
+export class BaseBuffer extends Uint8Array
 {
     _isBuffer = true;
     poolSize  = 8192;
@@ -25,22 +25,10 @@ export class TGBuffer extends Uint8Array
     /**
      * Constructor
      */
-    // constructor(arg: any, encodingOrOffset?: any, length?: number)
-    // {
-    //     super(arg as ArrayBuffer|Uint8Array, encodingOrOffset, length);
-    //
-    //     // if (typeof arg === 'number')
-    //     // {
-    //     //     if (typeof encodingOrOffset === 'string')
-    //     //     {
-    //     //         throw new TypeError(
-    //     //             'The "string" argument must be of type string. Received type number'
-    //     //         )
-    //     //     }
-    //     //     return allocUnsafe(arg)
-    //     // }
-    //     return TGBuffer.from(arg, encodingOrOffset, length)
-    // }
+    constructor(arg: any, encodingOrOffset?: any, length?: number)
+    {
+        super(arg as ArrayBuffer|Uint8Array, encodingOrOffset, length);
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Static methods
@@ -74,26 +62,26 @@ export class TGBuffer extends Uint8Array
     /**
      * Returns true if {obj} is a Buffer
      */
-    static isBuffer(obj: any): obj is TGBuffer
+    static isBuffer(obj: any): obj is BaseBuffer
     {
         return (
-            obj != null && obj._isBuffer === true && obj !== TGBuffer.prototype
+            obj != null && obj._isBuffer === true && obj !== BaseBuffer.prototype
         );
     }
 
-    static from(array: any[]): TGBuffer;
-    static from(buffer: TGBuffer|Uint8Array): TGBuffer;
-    static from(str: string, encoding?: string): TGBuffer;
+    static from(array: any[]): BaseBuffer;
+    static from(buffer: BaseBuffer|Uint8Array): BaseBuffer;
+    static from(str: string, encoding?: string): BaseBuffer;
     static from(
-        value: ArrayBuffer|string|TGBuffer|Uint8Array|any[],
+        value: ArrayBuffer|string|BaseBuffer|Uint8Array|any[],
         encodingOrOffset?: number,
         length?: number,
-    ): TGBuffer;
+    ): BaseBuffer;
     static from(
-        value: ArrayBuffer|string|TGBuffer|Uint8Array|any[],
+        value: ArrayBuffer|string|BaseBuffer|Uint8Array|any[],
         encodingOrOffset?: string|number,
         length?: number,
-    ): TGBuffer
+    ): BaseBuffer
     {
         if (typeof value === 'string')
         {
@@ -152,7 +140,7 @@ export class TGBuffer extends Uint8Array
                   (value as ArrayBuffer).valueOf();
         if (valueOf != null && valueOf !== value)
         {
-            return TGBuffer.from(
+            return BaseBuffer.from(
                 valueOf as ArrayBuffer,
                 encodingOrOffset as number,
                 length,
@@ -173,7 +161,7 @@ export class TGBuffer extends Uint8Array
         {
             const arg: (...args: any[]) => ArrayBuffer =
                       value[Symbol.toPrimitive];
-            return TGBuffer.from(
+            return BaseBuffer.from(
                 arg('string'),
                 encodingOrOffset as number,
                 length,
@@ -197,9 +185,9 @@ export class TGBuffer extends Uint8Array
      */
     static alloc(
         size: number,
-        fill?: string|TGBuffer|number,
+        fill?: string|BaseBuffer|number,
         encoding?: string,
-    ): TGBuffer
+    ): BaseBuffer
     {
         assertSize(size);
         if (size <= 0)
@@ -317,7 +305,7 @@ export class TGBuffer extends Uint8Array
         }
     }
 
-    slice(start?: number, end?: number): TGBuffer
+    slice(start?: number, end?: number): BaseBuffer
     {
         const len = this.length;
         start     = ~~start;
@@ -345,7 +333,7 @@ export class TGBuffer extends Uint8Array
 
         if (end < start) end = start;
 
-        return TGBuffer.from(this.subarray(start, end));
+        return BaseBuffer.from(this.subarray(start, end));
     }
 
     fill(val: any, encoding?: string): any;
@@ -355,7 +343,7 @@ export class TGBuffer extends Uint8Array
         start?: number|string,
         end?: number,
         encoding?: string,
-    ): TGBuffer
+    ): BaseBuffer
     {
         // Handle string cases:
         if (typeof val === 'string')
@@ -377,7 +365,7 @@ export class TGBuffer extends Uint8Array
             }
             if (
                 typeof encoding === 'string' &&
-                !TGBuffer.isEncoding(encoding)
+                !BaseBuffer.isEncoding(encoding)
             )
             {
                 throw new TypeError('Unknown encoding: ' + encoding);
@@ -430,9 +418,9 @@ export class TGBuffer extends Uint8Array
         }
         else
         {
-            const bytes = TGBuffer.isBuffer(val)
+            const bytes = BaseBuffer.isBuffer(val)
                 ? val
-                : TGBuffer.from(val, encoding);
+                : BaseBuffer.from(val, encoding);
             const len   = bytes.length;
             if (len === 0)
             {
@@ -450,25 +438,46 @@ export class TGBuffer extends Uint8Array
     }
 
     copy(
-        target: TGBuffer,
+        target: BaseBuffer,
         targetStart?: number,
         start?: number,
         end?: number,
     ): number
     {
-        if (!TGBuffer.isBuffer(target))
+        if (!BaseBuffer.isBuffer(target))
         {
             throw new TypeError('argument should be a Buffer');
         }
-        if (!start) start = 0;
-        if (!end && end !== 0) end = this.length;
-        if (targetStart >= target.length) targetStart = target.length;
-        if (!targetStart) targetStart = 0;
-        if (end > 0 && end < start) end = start;
+        if (!start)
+        {
+            start = 0;
+        }
+        if (!end && end !== 0)
+        {
+            end = this.length;
+        }
+        if (targetStart >= target.length)
+        {
+            targetStart = target.length;
+        }
+        if (!targetStart)
+        {
+            targetStart = 0;
+        }
+        if (end > 0 && end < start)
+        {
+            end = start;
+        }
 
         // Copy 0 bytes; we're done
-        if (end === start) return 0;
-        if (target.length === 0 || this.length === 0) return 0;
+        if (end === start)
+        {
+            return 0;
+        }
+        if (target.length === 0 || this.length === 0)
+        {
+            return 0;
+        }
 
         // Fatal error conditions
         if (targetStart < 0)
@@ -479,35 +488,36 @@ export class TGBuffer extends Uint8Array
         {
             throw new RangeError('Index out of range');
         }
-        if (end < 0) throw new RangeError('sourceEnd out of bounds');
-
-        // Are we oob?
-        if (end > this.length) end = this.length;
-        if (target.length - targetStart < end - start)
+        if (end >= 0)
         {
-            end = target.length - targetStart + start;
-        }
-
-        const len = end - start;
-
-        if (
-            this === target &&
-            typeof Uint8Array.prototype.copyWithin === 'function'
-        )
-        {
-            // Use built-in when available, missing from IE11
-            this.copyWithin(targetStart, start, end);
+            if (end > this.length) end = this.length;
+            if (target.length - targetStart < end - start)
+            {
+                end = target.length - targetStart + start;
+            }
+            const len = end - start;
+            if (
+                this === target &&
+                typeof Uint8Array.prototype.copyWithin === 'function'
+            )
+            {
+                // Use built-in when available, missing from IE11
+                this.copyWithin(targetStart, start, end);
+            }
+            else
+            {
+                Uint8Array.prototype.set.call(
+                    target,
+                    this.subarray(start, end),
+                    targetStart,
+                );
+            }
+            return len;
         }
         else
         {
-            Uint8Array.prototype.set.call(
-                target,
-                this.subarray(start, end),
-                targetStart,
-            );
+            throw new RangeError('sourceEnd out of bounds');
         }
-
-        return len;
     }
 
     toString(encoding?: string, start?: number, end?: number): string
@@ -519,5 +529,15 @@ export class TGBuffer extends Uint8Array
             return utf8Slice(this, 0, length);
         }
         return slowToString(encoding, start, end);
+    }
+}
+
+export class Buffer extends BaseBuffer
+{
+    constructor(arg: any, encodingOrOffset?: any, length?: number)
+    {
+        const buf = BaseBuffer.from(arg, encodingOrOffset, length);
+        super(buf.length);
+        buf.copy(this);
     }
 }

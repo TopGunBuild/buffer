@@ -1,9 +1,9 @@
 import { base64ToBytes, fromByteArray } from './base64';
-import { TGBuffer } from './buffer';
+import { BaseBuffer } from './buffer';
 
 const K_MAX_LENGTH = 0x7fffffff;
 
-export function asciiSlice(buf: TGBuffer, start: number, end: number): string
+export function asciiSlice(buf: BaseBuffer, start: number, end: number): string
 {
     let ret = '';
     end     = Math.min(buf.length, end);
@@ -15,7 +15,7 @@ export function asciiSlice(buf: TGBuffer, start: number, end: number): string
     return ret;
 }
 
-export function latin1Slice(buf: TGBuffer, start: number, end: number): string
+export function latin1Slice(buf: BaseBuffer, start: number, end: number): string
 {
     let ret = '';
     end     = Math.min(buf.length, end);
@@ -27,7 +27,7 @@ export function latin1Slice(buf: TGBuffer, start: number, end: number): string
     return ret;
 }
 
-export function base64Slice(buf: TGBuffer, start: number, end: number): string
+export function base64Slice(buf: BaseBuffer, start: number, end: number): string
 {
     if (start === 0 && end === buf.length)
     {
@@ -40,7 +40,7 @@ export function base64Slice(buf: TGBuffer, start: number, end: number): string
 }
 
 export function utf16leSlice(
-    buf: TGBuffer,
+    buf: BaseBuffer,
     start: number,
     end: number,
 ): string
@@ -56,7 +56,7 @@ export function utf16leSlice(
 }
 
 export function base64Write(
-    buf: TGBuffer,
+    buf: BaseBuffer,
     string: string,
     offset?: number,
     length?: number,
@@ -77,7 +77,7 @@ export function asciiToBytes(str: string): number[]
 }
 
 export function asciiWrite(
-    buf: TGBuffer,
+    buf: BaseBuffer,
     string: string,
     offset?: number,
     length?: number,
@@ -87,7 +87,7 @@ export function asciiWrite(
 }
 
 export function utf8Write(
-    buf: TGBuffer,
+    buf: BaseBuffer,
     string: string,
     offset?: number,
     length?: number,
@@ -103,7 +103,7 @@ export function utf8Write(
 
 export function blitBuffer(
     src: ArrayLike<any>,
-    dst: TGBuffer,
+    dst: BaseBuffer,
     offset?: number,
     length?: number,
 ): number
@@ -197,9 +197,9 @@ export function assertSize(size: number): void
     }
 }
 
-export function fromObject(obj: any): TGBuffer
+export function fromObject(obj: any): BaseBuffer
 {
-    if (TGBuffer.isBuffer(obj))
+    if (BaseBuffer.isBuffer(obj))
     {
         const len = checked(obj.length) | 0;
         const buf = createBuffer(len);
@@ -228,14 +228,14 @@ export function fromObject(obj: any): TGBuffer
     }
 }
 
-export function fromString(string: string, encoding: string): TGBuffer
+export function fromString(string: string, encoding: string): BaseBuffer
 {
     if (typeof encoding !== 'string' || encoding === '')
     {
         encoding = 'utf8';
     }
 
-    if (!TGBuffer.isEncoding(encoding))
+    if (!BaseBuffer.isEncoding(encoding))
     {
         throw new TypeError('Unknown encoding: ' + encoding);
     }
@@ -261,7 +261,7 @@ export function byteLength(
     encoding: string,
 ): number
 {
-    if (TGBuffer.isBuffer(string))
+    if (BaseBuffer.isBuffer(string))
     {
         return string.length;
     }
@@ -313,7 +313,7 @@ export function byteLength(
     }
 }
 
-export function fromArrayLike(array: ArrayLike<any>): TGBuffer
+export function fromArrayLike(array: ArrayLike<any>): BaseBuffer
 {
     const length = array.length < 0 ? 0 : checked(array.length) | 0;
     const buf    = createBuffer(length);
@@ -340,7 +340,7 @@ export function checked(length: number): number
     return length | 0;
 }
 
-export function fromArrayView(arrayView: ArrayLike<any>): TGBuffer
+export function fromArrayView(arrayView: ArrayLike<any>): BaseBuffer
 {
     if (isInstance(arrayView, Uint8Array))
     {
@@ -354,7 +354,7 @@ export function fromArrayBuffer(
     array: ArrayBuffer,
     byteOffset: number,
     length: number,
-): TGBuffer
+): BaseBuffer
 {
     if (byteOffset < 0 || array.byteLength < byteOffset)
     {
@@ -366,18 +366,18 @@ export function fromArrayBuffer(
         throw new RangeError('"length" is outside of buffer bounds');
     }
 
-    let buf: TGBuffer;
+    let buf: BaseBuffer;
     if (byteOffset === undefined && length === undefined)
     {
-        buf = new TGBuffer(array);
+        buf = new BaseBuffer(array);
     }
     else if (length === undefined)
     {
-        buf = new TGBuffer(array, byteOffset);
+        buf = new BaseBuffer(array, byteOffset);
     }
     else
     {
-        buf = new TGBuffer(array, byteOffset, length);
+        buf = new BaseBuffer(array, byteOffset, length);
     }
 
     return buf;
@@ -481,7 +481,7 @@ export function utf8ToBytes(string: string, units?: number): number[]
     return bytes;
 }
 
-export function createBuffer(length: number): TGBuffer
+export function createBuffer(length: number): BaseBuffer
 {
     if (length > K_MAX_LENGTH)
     {
@@ -489,7 +489,7 @@ export function createBuffer(length: number): TGBuffer
             'The value "' + length + '" is invalid for option "size"',
         );
     }
-    return new TGBuffer(length);
+    return new BaseBuffer(length);
 }
 
 // ArrayBuffer or Uint8Array objects from other contexts (i.e. iframes) do not pass
@@ -610,7 +610,7 @@ const hexSliceLookupTable = (function ()
     return table;
 })();
 
-function hexSlice(buf: TGBuffer, start: number, end: number): string
+function hexSlice(buf: BaseBuffer, start: number, end: number): string
 {
     const len = buf.length;
 
@@ -625,9 +625,9 @@ function hexSlice(buf: TGBuffer, start: number, end: number): string
     return out;
 }
 
-export function utf8Slice(buf: TGBuffer, start: number, end: number): string
+export function utf8Slice(buf: BaseBuffer, start: number, end: number): string
 {
-    end       = Math.min(buf.length, end);
+    end                 = Math.min(buf.length, end);
     const res: number[] = [];
 
     let i = start;
@@ -762,3 +762,10 @@ export function decodeCodePointsArray(codePoints: number[]): string
     }
     return res;
 }
+
+export function allocUnsafe(size: number): BaseBuffer
+{
+    assertSize(size);
+    return createBuffer(size < 0 ? 0 : checked(size) | 0);
+}
+
