@@ -12,13 +12,12 @@ import {
     ucs2Write, utf8Slice,
     utf8Write,
 } from './utils';
-import { IBuffer } from './types';
 
 declare const SharedArrayBuffer: any;
 
 /* eslint-disable prefer-rest-params */
 
-export class BaseBuffer extends Uint8Array implements IBuffer
+export class BaseBuffer extends Uint8Array
 {
     _isBuffer = true;
     poolSize  = 8192;
