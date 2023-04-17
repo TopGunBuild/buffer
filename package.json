@@ -8,11 +8,11 @@
     "files": [
         "dist"
     ],
-    "main": "dist/index.mjs",
+    "main": "dist/browser.mjs",
     "types": "./dist/browser.d.ts",
     "exports": {
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js"
+        "import": "./dist/browser.mjs",
+        "require": "./dist/node.js"
     },
     "scripts": {
         "build": "tsup",

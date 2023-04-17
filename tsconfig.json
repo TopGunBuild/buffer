@@ -7,7 +7,7 @@
         "noUnusedLocals": false,
         "removeComments": false,
         "noLib": false,
-        "target": "es6",
+        "target": "es2020",
         "sourceMap": false,
         "outDir": "./dist",
         "esModuleInterop": true
