@@ -34,7 +34,9 @@
         "buffer",
         "compatible",
         "dataview",
-        "uint8array"
+        "uint8array",
+        "nodejs",
+        "isomoprhic"
     ],
     "author": "Ivan Kalashnik",
     "license": "MIT",
