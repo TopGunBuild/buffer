@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.1...v1.0.2) (2023-04-18)
+
+
+### Bug Fixes
+
+* update "exports" in package.json ([94e9c77](https://github.com/TopGunBuild/topgun-buffer/commit/94e9c7771bc1b91ce0941e3857046c2e7910b098))
+
 ## [1.0.1](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.0...v1.0.1) (2023-04-17)
 
 
