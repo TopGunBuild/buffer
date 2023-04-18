@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.2...v1.0.3) (2023-04-18)
+
+
+### Bug Fixes
+
+* fix typings ([bb00605](https://github.com/TopGunBuild/topgun-buffer/commit/bb0060518cffbd53d860453175fbf7c0cb33016c))
+* globalName "topGunBuffer" -> "TopGunBuffer" ([7e2628b](https://github.com/TopGunBuild/topgun-buffer/commit/7e2628bcf56c689af269a45522c6e7b7c5fa48bf))
+* update tsup config for types generation ([be10a53](https://github.com/TopGunBuild/topgun-buffer/commit/be10a53ad8953cdf8828586064f834a48b105c81))
+
 ## [1.0.2](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.1...v1.0.2) (2023-04-18)
 
 
