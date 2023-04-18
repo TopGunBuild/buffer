@@ -9,6 +9,7 @@
         "dist"
     ],
     "types": "./dist/browser.d.ts",
+    "module": "./dist/browser.mjs",
     "exports": {
         "require": "./dist/node.js",
         "import": "./dist/browser.mjs"

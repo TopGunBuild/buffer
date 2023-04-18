@@ -110,7 +110,7 @@ export class BaseBuffer extends Uint8Array
             return fromArrayBuffer(
                 value as ArrayBuffer,
                 encodingOrOffset as number,
-                length,
+                length as number,
             );
         }
 
@@ -123,7 +123,7 @@ export class BaseBuffer extends Uint8Array
             return fromArrayBuffer(
                 value as ArrayBuffer,
                 encodingOrOffset as number,
-                length,
+                length as number,
             );
         }
 
@@ -156,11 +156,10 @@ export class BaseBuffer extends Uint8Array
         if (
             typeof Symbol !== 'undefined' &&
             Symbol.toPrimitive != null &&
-            typeof value[Symbol.toPrimitive] === 'function'
+            typeof (value as any)[Symbol.toPrimitive] === 'function'
         )
         {
-            const arg: (...args: any[]) => ArrayBuffer =
-                      value[Symbol.toPrimitive];
+            const arg: (...args: any[]) => ArrayBuffer = (value as any)[Symbol.toPrimitive];
             return BaseBuffer.from(
                 arg('string'),
                 encodingOrOffset as number,
@@ -236,9 +235,9 @@ export class BaseBuffer extends Uint8Array
         else if (isFinite(offset as number))
         {
             offset = (offset as number) >>> 0;
-            if (isFinite(length))
+            if (isFinite(length as number))
             {
-                length = length >>> 0;
+                length = (length as number) >>> 0;
                 if (encoding === undefined) encoding = 'utf8';
             }
             else
@@ -308,7 +307,7 @@ export class BaseBuffer extends Uint8Array
     slice(start?: number, end?: number): BaseBuffer
     {
         const len = this.length;
-        start     = ~~start;
+        start     = ~~(start as number);
         end       = end === undefined ? len : ~~end;
 
         if (start < 0)
@@ -392,15 +391,18 @@ export class BaseBuffer extends Uint8Array
             val = Number(val);
         }
 
-        // Invalid ranges are not set to a default, so can range check early.
-        if (start < 0 || this.length < start || this.length < end)
+        if (typeof start === 'number' && typeof end === 'number')
         {
-            throw new RangeError('Out of range index');
-        }
+            // Invalid ranges are not set to a default, so can range check early.
+            if (start < 0 || this.length < start || this.length < end)
+            {
+                throw new RangeError('Out of range index');
+            }
 
-        if (end <= start)
-        {
-            return this;
+            if (end <= start)
+            {
+                return this;
+            }
         }
 
         start = (start as number) >>> 0;
@@ -456,7 +458,7 @@ export class BaseBuffer extends Uint8Array
         {
             end = this.length;
         }
-        if (targetStart >= target.length)
+        if (typeof targetStart === 'number' && targetStart >= target.length)
         {
             targetStart = target.length;
         }
@@ -528,7 +530,7 @@ export class BaseBuffer extends Uint8Array
         {
             return utf8Slice(this, 0, length);
         }
-        return slowToString(encoding, start, end);
+        return slowToString(encoding as string, start as number, end as number);
     }
 }
 
