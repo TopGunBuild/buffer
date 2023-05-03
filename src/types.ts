@@ -1,4 +1,4 @@
-export interface IBuffer extends Array<any> {
+export interface IBuffer extends Array<number> {
 
     from(array: any[]): IBuffer;
     from(buffer: Uint8Array): IBuffer;

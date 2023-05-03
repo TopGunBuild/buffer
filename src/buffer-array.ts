@@ -19,7 +19,7 @@ BufferArray.prototype.toString = function (enc: string, start: number, end: numb
         let res   = '';
         for (let i = 0; i < num; i++)
         {
-            res += buf[i + start].toString(16).padStart(2, '0')
+            res += buf[i + start].toString(16).padStart(2, '0');
         }
         return res
     }
