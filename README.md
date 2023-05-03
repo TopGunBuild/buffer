@@ -16,6 +16,8 @@
   </a>
 </p>
 
+This is Buffer implementation used in <a href="https://github.com/TopGunBuild/topgun">TopGun</a>. Functionality is mostly compatible with NodeJS 'safe-buffer' and is used for encoding conversions between binary and 'hex' | 'utf8' | 'base64'.
+
 ## Install
 
 `npm install topgun-buffer`

@@ -64,4 +64,13 @@ describe('Buffer', () => {
 
         expect(text).toEqual(buf.toString());
     });
+
+    it('alloc', async () =>
+    {
+        const data = Buffer.alloc(5);
+
+        console.log(data);
+
+        expect(data.length).toEqual(5);
+    });
 });
