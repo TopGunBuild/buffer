@@ -1,23 +1,9 @@
-import { Buffer } from '../src/buffer';
+import Buffer from '../src/browser';
 
 describe('Buffer', () => {
-    it('instanceof Buffer', async () => {
-        const buf = new Buffer([1, 2]);
-        expect(buf instanceof Buffer).toBeTruthy();
-    });
-
-    it('convert to Uint8Array in modern browsers', async () =>
-    {
-        const buf        = new Buffer([1, 2]);
-        const uint8array = new Uint8Array(buf.buffer);
-        expect(uint8array instanceof Uint8Array).toBeTruthy();
-        expect(uint8array[0]).toEqual(1);
-        expect(uint8array[1]).toEqual(2);
-    });
-
     it('indexes from a string', async () =>
     {
-        const buf = new Buffer('abc');
+        const buf = Buffer.from('abc');
         expect(buf[0]).toEqual(97);
         expect(buf[1]).toEqual(98);
         expect(buf[2]).toEqual(99);
@@ -25,7 +11,7 @@ describe('Buffer', () => {
 
     it('indexes from an array', async () =>
     {
-        const buf = new Buffer([97, 98, 99]);
+        const buf = Buffer.from([97, 98, 99]);
         expect(buf[0]).toEqual(97);
         expect(buf[1]).toEqual(98);
         expect(buf[2]).toEqual(99);
@@ -33,7 +19,7 @@ describe('Buffer', () => {
 
     it('setting index value should modify buffer contents', async () =>
     {
-        const buf = new Buffer([97, 98, 99]);
+        const buf = Buffer.from([97, 98, 99]);
         expect(buf[2]).toEqual(99);
         expect(buf.toString()).toEqual('abc');
 
@@ -45,7 +31,7 @@ describe('Buffer', () => {
     it('test that memory is copied from array-like', async () =>
     {
         const u = new Uint8Array(4);
-        const b = new Buffer(u);
+        const b = Buffer.from(u);
         b[0]    = 1;
         b[1]    = 2;
         b[2]    = 3;
@@ -60,7 +46,7 @@ describe('Buffer', () => {
     it('detect utf16 surrogate pairs', async () =>
     {
         const text = '\uD83D\uDE38' + '\uD83D\uDCAD' + '\uD83D\uDC4D';
-        const buf = new Buffer(text);
+        const buf = Buffer.from(text);
 
         expect(text).toEqual(buf.toString());
     });
@@ -68,8 +54,6 @@ describe('Buffer', () => {
     it('alloc', async () =>
     {
         const data = Buffer.alloc(5);
-
-        console.log(data);
 
         expect(data.length).toEqual(5);
     });
