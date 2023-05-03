@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.3...v1.0.4) (2023-05-03)
+
+
+### Bug Fixes
+
+* rewrite buffer implementation ([530c9e4](https://github.com/TopGunBuild/topgun-buffer/commit/530c9e47e249add34f431953bf9aef52ff5eb755))
+
 ## [1.0.3](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.2...v1.0.3) (2023-04-18)
 
 

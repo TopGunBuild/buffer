@@ -1,6 +1,6 @@
 {
     "name": "topgun-buffer",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "An isomorphic Buffer API",
     "publishConfig": {
         "access": "public"
