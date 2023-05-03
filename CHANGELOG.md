@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.4...v1.0.5) (2023-05-03)
+
+
+### Bug Fixes
+
+* publish typings ([cbfef23](https://github.com/TopGunBuild/topgun-buffer/commit/cbfef232e7332cacad6fe1971f84bc462aa063cc))
+
 ## [1.0.4](https://github.com/TopGunBuild/topgun-buffer/compare/v1.0.3...v1.0.4) (2023-05-03)
 
 
