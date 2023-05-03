@@ -117,3 +117,4 @@ SafeBuffer.prototype.from     = (<any>SafeBuffer).from;
 SafeBuffer.prototype.toString = BufferArray.prototype.toString;
 
 export default <any>SafeBuffer;
+
