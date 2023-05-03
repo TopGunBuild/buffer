@@ -1,21 +1,16 @@
-export interface IBufferCore extends Array<number>
-{
-    toString(enc?: string, start?: number, end?: number);
-}
+export interface IBuffer extends Array<any> {
 
-export interface IBuffer {
+    from(array: any[]): IBuffer;
+    from(buffer: Uint8Array): IBuffer;
+    from(str: string, encoding?: string): IBuffer;
+    from(value: ArrayBuffer | string | Uint8Array | any[], encodingOrOffset?: number, length?: number): IBuffer;
 
-    from(array: any[]): IBufferCore;
-    from(buffer: Uint8Array): IBufferCore;
-    from(str: string, encoding?: string): IBufferCore;
-    from(value: ArrayBuffer | string | Uint8Array | any[], encodingOrOffset?: number, length?: number): IBufferCore;
+    alloc(size: number, fill?: string | number, encoding?: string): IBuffer;
+    allocUnsafe(length: number): IBuffer;
 
-    alloc(size: number, fill?: string | number, encoding?: string): IBufferCore;
-    allocUnsafe(length: number): IBufferCore;
+    fill(value: number, start?: number, end?: number): this;
 
-    fill(value: number, start?: number, end?: number): IBufferCore;
-
-    concat(arr: any[]): IBufferCore;
+    concat(arr: any[]): IBuffer;
 
     toString(encoding?: string, start?: number, end?: number): string;
 }
