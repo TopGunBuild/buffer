@@ -20,6 +20,7 @@
         "prettier"
     ],
     "rules": {
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": "off",
@@ -55,6 +56,7 @@
         "brace-style": [
             2,
             "allman"
-        ]
+        ],
+        "prefer-rest-params": "off"
     }
 }
