@@ -1,6 +1,6 @@
 {
-    "name": "topgun-buffer",
-    "version": "1.0.6",
+    "name": "@topgunbuild/buffer",
+    "version": "0.0.0",
     "description": "An isomorphic Buffer API",
     "publishConfig": {
         "access": "public"
@@ -21,11 +21,12 @@
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "eslint \"src/**/*.ts\" --fix",
         "prepare": "simple-git-hooks",
-        "semantic-release": "semantic-release"
+        "release": "release-it",
+        "tarball": "rimraf tar && pnpm pack --pack-destination ./tar"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/TopGunBuild/topgun-buffer.git"
+        "url": "git+https://github.com/TopGunBuild/buffer.git"
     },
     "keywords": [
         "arraybuffer",
@@ -38,19 +39,13 @@
         "nodejs",
         "isomoprhic"
     ],
-    "author": "Ivan Kalashnik",
+    "author": "ivan@topgun.build",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/TopGunBuild/topgun-buffer/issues"
+        "url": "https://github.com/TopGunBuild/buffer/issues"
     },
-    "homepage": "https://github.com/TopGunBuild/topgun-buffer#readme",
+    "homepage": "https://github.com/TopGunBuild/buffer#readme",
     "devDependencies": {
-        "@semantic-release/changelog": "^6.0.3",
-        "@semantic-release/commit-analyzer": "^9.0.2",
-        "@semantic-release/git": "^10.0.1",
-        "@semantic-release/github": "^8.0.7",
-        "@semantic-release/npm": "^10.0.3",
-        "@semantic-release/release-notes-generator": "^10.0.3",
         "@types/jest": "^29.5.0",
         "@types/node": "^18.15.11",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
@@ -61,7 +56,8 @@
         "jest": "^29.5.0",
         "lint-staged": "^13.2.1",
         "prettier": "^2.8.7",
-        "semantic-release": "^21.0.1",
+        "release-it": "^16.1.5",
+        "rimraf": "^5.0.1",
         "simple-git-hooks": "^2.8.1",
         "ts-jest": "^29.1.0",
         "tsup": "^6.7.0",
