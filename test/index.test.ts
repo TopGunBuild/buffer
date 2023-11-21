@@ -1,4 +1,4 @@
-import Buffer from '../src/browser';
+import Buffer from '../src/index';
 
 describe('Buffer', () => {
     it('indexes from a string', async () =>
